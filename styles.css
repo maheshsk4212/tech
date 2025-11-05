@@ -39,16 +39,64 @@ html {
   scroll-behavior: smooth;
 }
 
-/* small helper for nav on mobile */
-.mobile-nav {
-  display: none;
+/* Burger Menu Styles */
+.burger-line {
+  width: 20px;
+  height: 2px;
+  background-color: white;
+  margin: 2px 0;
+  transition: all 0.3s ease;
 }
 
-@media (max-width: 768px) {
-  .mobile-nav {
-    display: block;
-  }
-  nav.hidden-md {
-    display: none;
-  }
+/* Mobile Menu Links */
+.mobile-link {
+  color: white;
+  font-size: 1.5rem;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.mobile-link:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: #2c4df7;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.mobile-link:hover {
+  color: #2c4df7;
+}
+
+.mobile-link:hover:after {
+  width: 100%;
+}
+
+/* Menu Open State */
+.menu-open {
+  transform: translateX(0) !important;
+}
+
+.menu-open .burger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-open .burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-open .burger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Hide scrollbar when menu is open */
+body.menu-open {
+  overflow: hidden;
 }
