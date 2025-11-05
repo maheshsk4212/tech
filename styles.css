@@ -1,0 +1,54 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.hero-bg {
+  background: linear-gradient(120deg, rgba(7,23,57,0.9), rgba(26,37,96,0.9)), url('https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+}
+
+.btn-primary {
+  background-color: #2c4df7;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #1a37c5;
+  transform: scale(1.05);
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* small helper for nav on mobile */
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: block;
+  }
+  nav.hidden-md {
+    display: none;
+  }
+}
