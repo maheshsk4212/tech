@@ -8,33 +8,53 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link href="styles.css" rel="stylesheet">
   </head>
   <body class="text-gray-800">
     <!-- Header -->
     <header class="hero-bg text-white p-6 flex justify-between items-center sticky top-0 z-50 shadow-lg bg-opacity-90 backdrop-blur-lg">
       <div class="text-2xl font-bold" data-aos="fade-right">Tech Pioneer IT</div>
-      <nav class="space-x-6 text-sm font-medium hidden-md" data-aos="fade-down">
-        <a href="#home" class="hover:text-blue-300">Home</a>
-        <a href="#about" class="hover:text-blue-300">About</a>
-        <a href="#services" class="hover:text-blue-300">Services</a>
-        <a href="#case-studies" class="hover:text-blue-300">Case Studies</a>
-        <a href="#insights" class="hover:text-blue-300">Insights</a>
-        <a href="#contact" class="hover:text-blue-300">Contact</a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex space-x-6 text-sm font-medium" data-aos="fade-down">
+        <a href="#home" class="hover:text-blue-300 transition duration-300">Home</a>
+        <a href="#about" class="hover:text-blue-300 transition duration-300">About</a>
+        <a href="#services" class="hover:text-blue-300 transition duration-300">Services</a>
+        <a href="#case-studies" class="hover:text-blue-300 transition duration-300">Case Studies</a>
+        <a href="#insights" class="hover:text-blue-300 transition duration-300">Insights</a>
+        <a href="#contact" class="hover:text-blue-300 transition duration-300">Contact</a>
       </nav>
+
       <div class="flex items-center gap-4">
-        <a href="#contact" class="btn-primary px-5 py-2 rounded-lg text-sm font-semibold" data-aos="fade-left">Get in Touch</a>
-        <button class="mobile-nav bg-white text-blue-700 px-3 py-2 rounded-md">Menu</button>
+        <a href="#contact" class="btn-primary px-5 py-2 rounded-lg text-sm font-semibold hidden sm:inline-block" data-aos="fade-left">Get in Touch</a>
+        <!-- Hamburger Button -->
+        <button id="menuBtn" class="lg:hidden flex flex-col justify-center items-center w-8 h-8 border-2 border-white rounded-md focus:outline-none">
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+          <span class="burger-line"></span>
+        </button>
       </div>
     </header>
 
-    <div id="mobileMenu" class="hidden bg-white p-4 md:hidden">
-      <a href="#home" class="block py-2">Home</a>
-      <a href="#about" class="block py-2">About</a>
-      <a href="#services" class="block py-2">Services</a>
-      <a href="#case-studies" class="block py-2">Case Studies</a>
-      <a href="#insights" class="block py-2">Insights</a>
-      <a href="#contact" class="block py-2">Contact</a>
+    <!-- Mobile/Tablet Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 bg-gray-900 bg-opacity-95 z-50 transform transition-transform duration-300 translate-x-full lg:hidden">
+      <div class="flex justify-end p-6">
+        <button id="closeMenu" class="text-white hover:text-blue-300 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col items-center justify-center h-full -mt-20">
+        <a href="#home" class="mobile-link">Home</a>
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#services" class="mobile-link">Services</a>
+        <a href="#case-studies" class="mobile-link">Case Studies</a>
+        <a href="#insights" class="mobile-link">Insights</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+        <a href="#contact" class="btn-primary px-8 py-3 rounded-lg text-sm font-semibold mt-8 sm:hidden">Get in Touch</a>
+      </nav>
     </div>
 
     <!-- Hero Section -->
@@ -172,12 +192,16 @@
 
       <div class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
         <div data-aos="fade-right">
-          <form class="space-y-6 bg-white p-8 rounded-xl shadow-lg">
-            <input type="text" placeholder="Full Name" class="w-full border p-3 rounded-lg" />
-            <input type="email" placeholder="Email Address" class="w-full border p-3 rounded-lg" />
-            <input type="text" placeholder="Company Name" class="w-full border p-3 rounded-lg" />
-            <textarea placeholder="Tell us about your project..." rows="5" class="w-full border p-3 rounded-lg"></textarea>
-            <button class="btn-primary w-full py-3 rounded-lg font-semibold hover:shadow-xl">Send Message</button>
+          <form id="contactForm" class="space-y-6 bg-white p-8 rounded-xl shadow-lg" onsubmit="return handleSubmit(event)">
+            <input type="text" name="fullName" placeholder="Full Name" required class="w-full border p-3 rounded-lg" />
+            <input type="email" name="email" placeholder="Email Address" required class="w-full border p-3 rounded-lg" />
+            <input type="text" name="company" placeholder="Company Name" required class="w-full border p-3 rounded-lg" />
+            <textarea name="message" placeholder="Tell us about your project..." rows="5" required class="w-full border p-3 rounded-lg"></textarea>
+            <button type="submit" class="btn-primary w-full py-3 rounded-lg font-semibold hover:shadow-xl">Send Message</button>
+            <div id="formStatus" class="text-center hidden">
+              <p class="success hidden text-green-600">Thank you! Your message has been sent successfully.</p>
+              <p class="error hidden text-red-600">Sorry, there was an error sending your message. Please try again.</p>
+            </div>
           </form>
         </div>
 
