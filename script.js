@@ -13,15 +13,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenu = document.getElementById('mobileMenu');
     const body = document.body;
 
+    // Store the scroll position
+    let scrollPosition = 0;
+
     // Toggle menu
     function toggleMenu() {
+        menuBtn.classList.toggle('active');
         mobileMenu.classList.toggle('menu-open');
-        body.classList.toggle('menu-open');
+        
+        // Handle body scroll locking
+        if (!body.classList.contains('menu-open')) {
+            // Menu is being opened
+            scrollPosition = window.pageYOffset;
+            body.classList.add('menu-open');
+            body.style.top = `-${scrollPosition}px`;
+        } else {
+            // Menu is being closed
+            body.classList.remove('menu-open');
+            body.style.removeProperty('top');
+            window.scrollTo(0, scrollPosition);
+        }
     }
 
     // Event listeners for menu buttons
-    menuBtn?.addEventListener('click', toggleMenu);
-    closeBtn?.addEventListener('click', toggleMenu);
+    if (menuBtn) {
+        menuBtn.addEventListener('click', toggleMenu);
+    }
+    if (closeBtn) {
+        closeBtn.addEventListener('click', toggleMenu);
+    }
 
     // Close menu when clicking links
     const mobileLinks = mobileMenu?.querySelectorAll('.mobile-link');
